@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Quản Lý Ký Túc Xá</title>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QLKTX</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      th:href="@{~/style.css}"
+      rel="stylesheet"
+      href="../static/style.css"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/">Trang Chủ</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/room"
+              >Quản Lý Phòng</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/student"
+              >Quản Lý Sinh Viên</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/service"
+              >Quản Lý Dịch Vụ</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/rent">Thuê Phòng</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/usedService"
+              >Sử Dụng Dịch Vụ</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/visitor"
+              >Quản Lý Khách</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/motorcycle"
+              >Quản Lý Xe</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/ticket"
+              >Quản Lý Vé Xe</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/parking"
+              >Quản Lý Gửi Xe</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <form
+      method="POST"
+      th:action="@{/student/editStudent}"
+      class="container my-3"
+      style="position: relative;"
+    >
+      <h1>Sửa Sinh Viên</h1>
+      <input type="hidden" id="id" name="id" th:value="${id}" />
+
+      <div class="mb-4 input-field row">
+        <label for="" class="col-sm-2 col-form-label">Mã Sinh Viên: </label>
+        <input
+          class="col-sm-4"
+          type="text"
+          name="studentID"
+          th:value="${studentID}"
+        />
+      </div>
+      <label for="name" th:text="${msg}"></label>
+
+      <div class="mb-4 input-field row">
+        <label for="" class="col-sm-2 col-form-label">Số CMT: </label>
+        <input
+          class="col-sm-4"
+          type="text"
+          name="idNumber"
+          th:value="${idNumber}"
+        />
+      </div>
+
+      <div class="mb-4 input-field row">
+        <label for="" class="col-sm-2 col-form-label"> Họ Và Tên:</label>
+        <input
+          class="col-sm-4"
+          type="text"
+          name="fullname"
+          th:value="${fullname}"
+        />
+      </div>
+
+      <div class="mb-4 input-field row">
+        <label for="" class="col-sm-2 col-form-label">Ngày Sinh: </label>
+        <input class="col-sm-4" type="date" name="dob" th:value="${dob}" />
+      </div>
+
+      <div class="mb-4 input-field row">
+        <label for="" class="col-sm-2 col-form-label">Lớp: </label>
+        <input
+          class="col-sm-4"
+          type="text"
+          name="classID"
+          th:value="${classID}"
+        />
+      </div>
+
+      <div class="mb-4 input-field row">
+        <label for="" class="col-sm-2 col-form-label">Quê Quán: </label>
+        <input
+          class="col-sm-4"
+          type="text"
+          name="hometown"
+          th:value="${hometown}"
+        />
+      </div>
+      <div class="btn-gr mt-3" style="position: relative; left: 20%">
+        <input type="submit" class="btn btn-primary me-2" value="Sửa" />
+        <a th:href="@{/}" class="btn btn-warning ms-2">Hủy</a>
+      </div>
+    </form>
+  </body>
+</html>

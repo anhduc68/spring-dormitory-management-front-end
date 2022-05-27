@@ -1,0 +1,38 @@
+body {
+  overflow-x: hidden;
+}
+
+nav ul li a {
+  color: #fff !important;
+}
+nav ul li a:hover {
+  background-color: rgb(204, 204, 204);
+  color: #000 !important;
+}
+
+form {
+  max-width: 600px;
+  margin: auto;
+}
+
+form .input-field,
+form .btn-gr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.btn-link {
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.hide-show-all-btn {
+  display: none;
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Quản Lý Ký Túc Xá</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      th:href="@{~/style.css}"
+      rel="stylesheet"
+      href="../static/style.css"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/">Trang Chủ</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/room"
+              >Quản Lý Phòng</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/student"
+              >Quản Lý Sinh Viên</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/service"
+              >Quản Lý Dịch Vụ</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/rent">Thuê Phòng</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/usedService"
+              >Sử Dụng Dịch Vụ</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/visitor"
+              >Quản Lý Khách</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/motorcycle"
+              >Quản Lý Xe</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/ticket"
+              >Quản Lý Vé Xe</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/parking"
+              >Quản Lý Gửi Xe</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <form method="POST" th:action="@{/usedService/add}" class="container my-3" id="form">
+      <h1 class="my-4">Sinh viên đăng ký sử dụng dịch vụ</h1>
+      <div class="mb-4 row input-field">
+        <label class="col-sm-2 col-form-label" for="name">Sinh Viên</label>
+        <div class="col-sm-3">
+          <select
+            class="form-select"
+            aria-label=""
+            id="student_id"
+            name="student_id"
+          >
+            <option
+              th:each="student : ${listStudent}"
+              th:value="${student.id}"
+              th:text="${student.fullname}"
+            />
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-4 row input-field">
+        <label class="col-sm-2 col-form-label" for="name">Dịch Vụ </label>
+        <div class="col-sm-3">
+          <select
+            class="form-select"
+            aria-label=""
+            id="service_id"
+            name="service_id"
+          >
+            <option
+              th:each="service : ${listService}"
+              th:value="${service.id}"
+              th:text="${service.name}"
+            />
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-4 input-field row">
+        <label for="" class="col-sm-2 col-form-label">Số lượng:</label>
+        <div class="col-sm-3">
+          <input
+            class="col-sm-3 form-control numberService"
+            type="text"
+            id="quantity"
+            name="quantity"
+          />
+        </div>
+          <span style="margin-left:100%; color:red;" class="form-message"></span>
+      </div>
+
+      <div class="btn-gr mt-3">
+        <input type="submit" class="btn btn-primary me-2" value="Thêm" />
+        <a th:href="@{/}" class="btn btn-warning ms-2">Hủy</a>
+      </div>
+    </form>
+    <script type="text/javascript">
+    function Validator(options){
+
+        function getParent(element , selector){
+            while(element.parentElement){
+                if(element.parentElement.matches(selector)){
+                    return element.parentElement
+                }
+                element = element.parentElement
+            }
+        }
+
+        var selectorRules={}
+
+
+        function Validate(inputElement,rule){
+            var errorMessage ;
+            var rules = selectorRules[rule.selector]
+            for(var i=0; i<rules.length;i++){
+
+                switch(inputElement.type){
+                    case 'radio':
+                    case 'checkbox':
+                        errorMessage = rules[i](
+                            document.querySelector(rule.selector + ':checked')
+                        )
+                        break;
+                    default:
+                        errorMessage = rules[i](inputElement.value)
+                }
+
+                if(errorMessage) break
+            }
+            if(errorMessage){
+                getParent(inputElement,options.formGroupSelector).querySelector(options.errorSelector).innerText = errorMessage
+                getParent(inputElement,options.formGroupSelector).classList.add('invalid')
+            }
+            else{
+                getParent(inputElement,options.formGroupSelector).querySelector(options.errorSelector).innerText = ''
+                getParent(inputElement,options.formGroupSelector).classList.remove('invalid')
+            }
+            return !errorMessage
+        }
+
+        var formElement = document.querySelector(options.form);
+        if(formElement){
+
+            formElement.onsubmit = function(e){
+                e.preventDefault(); 
+                var isFormValid = true;
+
+                options.rules.forEach(rule =>{
+                    var inputElement = formElement.querySelector(rule.selector)
+                    var isValid = Validate(inputElement,rule)
+                    if(!isValid){
+                        isFormValid = false
+                    }
+                    
+                })
+
+                if(isFormValid){
+                    if(typeof options.onSubmit === 'function'){
+                        var enableInputs = formElement.querySelectorAll('[name]');
+                        var formValues = Array.from(enableInputs).reduce((values,input)=>{
+                            switch(input.type){
+                                case 'radio':
+                                    if(input.matches(':checked')) values[input.name]=input.value                              
+                                    break
+                                case 'checkbox':                              
+                                    if(!Array.isArray(values[input.name])){
+                                        values[input.name]=[]
+                                    }
+                                    if(input.matches(':checked')){
+                                        values[input.name].push(input.value)
+                                    }                                                              
+                                    break
+                                default:
+                                    values[input.name]=input.value
+
+                            }
+                            return values
+                        },{})
+                        options.onSubmit(formValues)
+                    }
+                    else{
+                        formElement.submit()
+                    }
+                }
+
+            } 
+
+
+            options.rules.forEach(rule => {
+
+                if(Array.isArray(selectorRules[rule.selector])){
+                    selectorRules[rule.selector].push(rule.test)
+                }
+                else{
+                    selectorRules[rule.selector]= [rule.test]
+                }
+
+                var inputElements = formElement.querySelectorAll(rule.selector)
+                Array.from(inputElements).forEach(inputElement =>{
+                    if(inputElement){
+                        inputElement.onblur = function(){
+                            Validate(inputElement,rule)
+                        }
+                        inputElement.oninput = function(){
+                            getParent(inputElement,options.formGroupSelector).querySelector(options.errorSelector).innerText = ''
+                            getParent(inputElement,options.formGroupSelector).classList.remove('invalid')
+                        }
+                    }
+                })
+            });
+            
+        }
+    }
+
+
+    // Định nghĩa các rules
+    Validator.isRequired = function(selector){
+        return{
+            selector:selector,
+            test: function(value){
+                return value ? undefined : 'Vui lòng nhập trường này'
+            }
+        }
+    }
+    Validator.isNumber = function(selector){
+        return{
+            selector:selector,
+            test: function(value){
+                return /^[0-9]+$/.test(value) ? undefined :'Vui lòng nhập đúng kiểu số'
+            }
+        }
+    }
+    Validator.isCMT = function(selector){
+        return{
+            selector:selector,
+            test: function(value){
+                return /^\d{10}$/.test(value) ? undefined :'Vui lòng nhập đúng CMT'
+            }
+        }
+    }
+
+    
+    </script>
+  	<script type="text/javascript">
+  	Validator({
+        form: '#form',
+        formGroupSelector: '.input-field',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('.numberService'),
+            Validator.isNumber('.numberService'),
+        ],
+    })
+  	</script>
+  </body>
+</html>

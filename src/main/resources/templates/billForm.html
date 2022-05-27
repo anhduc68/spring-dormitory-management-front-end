@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Quản Lý Ký Túc Xá</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      th:href="@{~/style.css}"
+      rel="stylesheet"
+      href="../static/style.css"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/">Trang Chủ</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/room"
+              >Quản Lý Phòng</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/student"
+              >Quản Lý Sinh Viên</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/service"
+              >Quản Lý Dịch Vụ</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/rent">Thuê Phòng</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/usedService"
+              >Sử Dụng Dịch Vụ</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/visitor"
+              >Quản Lý Khách</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/motorcycle"
+              >Quản Lý Xe</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/ticket"
+              >Quản Lý Vé Xe</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/parking"
+              >Quản Lý Gửi Xe</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+	<div class="container">
+		<h4>Hóa Đơn Tháng </h4><h4 th:text="${lableTime}"></h4>
+
+	<h3>Thông tin Sinh Viên: </h3>
+	<Table  class="table table-hover table-bordered align-middle text-center mt-2">
+		<tr class="table-secondary">
+			<th>ID</th>
+			<th>Mã Sinh Viên</th>
+			<th>Số CMT</th>
+			<th>Họ Và tên</th>
+			<th>Ngày Sinh</th>
+			<th>Lớp</th>
+			<th>Quê Quán</th>
+		</tr>
+		<tr>
+			<td th:text=" ${student.id}">
+			</td>
+			<td th:text="${student.studentID}"></td>
+			<td th:text="${student.idNumber}"></td>
+			<td th:text="${student.fullname}"></td>
+			<td th:text="${student.dobFormat}"></td>
+			<td th:text="${student.classID}"></td>
+			<td th:text="${student.hometown}"></td>
+		</tr>
+	</Table>
+
+	<h3>Thông Phòng Đã Thuê: </h3>
+	<Table  class="table table-hover table-bordered align-middle text-center mt-2">
+		<tr class="table-secondary">
+			<th>ID</th>
+			<th>Số Phòng</th>
+			<th>Loại Phòng</th>
+			<th>Đơn Giá</th>
+			<th>Thời Gian Thuê</th>
+
+		</tr>
+		<tr  th:each=" list : ${listRent}">
+			<td th:text=" ${list.id}">
+			</td>
+			<td th:text="${list.room.roomNumber}"></td>
+			<td th:text="${list.room.type}"></td>
+			<td th:text="${list.price}"></td>
+			<td th:text="${list.rentDateFormat}"></td>
+		</tr >
+	</Table>
+
+	<h3>Thông tin Vé Xe Đã Mua: </h3>
+	<Table  class="table table-hover table-bordered align-middle text-center mt-2">
+		<tr class="table-secondary">
+			<th>ID</th>
+			<th>Sinh Viên</th>
+			<th>Biển Số Xe</th>
+			<th>Loại Xe</th>
+			<th>Giá Vé</th>
+			<th>Thời Gian Sử Dụng</th>
+		</tr>
+		<tr th:each=" list : ${listTicket}">
+			<td th:text=" ${list.id}">
+			</td>
+			<td th:text="${list.motorcycle.studentMoto.fullname}"></td>
+			<td th:text="${list.motorcycle.licencePlate}"></td>
+			<td th:text="${list.motorcycle.type}"></td>
+			<td th:text="${list.price}"></td>
+			<td th:text="${list.usageTimeFormat}"></td>
+		</tr>
+	</Table>
+
+	<h3>Thông tin Dịch Vụ Đã Sử Dụng: </h3>
+	<Table  class="table table-hover table-bordered align-middle text-center mt-2">
+		<tr class="table-secondary">
+			<th>ID</th>
+			<th>Tên Dịch Vụ</th>
+			<th>Đơn Giá</th>
+			<th>Số Lượng</th>
+			<th>Tổng Tiền</th>
+			<th>Sinh Viên Sử Dụng</th>
+			<th>Thời gian Sử Dụng</th>
+
+		</tr>
+		<tr th:each=" list : ${listUsedService}">
+			<td th:text=" ${list.id}">
+			</td>
+			<td th:text="${list.service.name}"></td>
+			<td th:text="${list.service.unitPrice}"></td>
+			<td th:text="${list.quantity}"></td>
+			<td th:text="${list.totalAmount}"></td>
+			<td th:text="${list.studentServ.fullname}"></td>
+			<td th:text="${list.serviceUsageTimeFormat}"></td>
+		</tr>
+	</Table>
+
+	<span>Tổng :</span > <span th:text="${total}">Tổng tiền</span >
+	</div>
+	
+</body>
+
+</html>

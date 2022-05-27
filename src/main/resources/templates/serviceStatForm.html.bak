@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Quản Lý Ký Túc Xá</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      th:href="@{~/style.css}"
+      rel="stylesheet"
+      href="../static/style.css"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/">Trang Chủ</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/room"
+              >Quản Lý Phòng</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/student"
+              >Quản Lý Sinh Viên</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/service"
+              >Quản Lý Dịch Vụ</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/rent">Thuê Phòng</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/usedService"
+              >Sử Dụng Dịch Vụ</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/visitor"
+              >Quản Lý Khách</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/motorcycle"
+              >Quản Lý Xe</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/ticket"
+              >Quản Lý Vé Xe</a
+            >
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" aria-current="page" href="/parking"
+              >Quản Lý Gửi Xe</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+	<form method="POST" th:action="@{/service/serviceStat}" th:object="${month}" 
+	class="container my-3">
+		<h1>Thống Kê Dịch Vụ</h1>
+		
+		<div class="d-flex">
+			<div class="mb-4 row input-field col-sm-5">
+				<label class="col-sm-3 col-form-label">Chọn Tháng:</label>
+				<div class="col-sm-4">
+					<select class="form-select" aria-label="" id="month" name="month">
+						<option th:each="i : ${#numbers.sequence(1, 12)}" th:value="${i}" th:text="${i}" th:selected="${i==month}">
+						</option>
+					</select>
+				</div>
+			</div>
+	
+			<div class="btn-gr" style="position: relative; display:inline-block;">
+				<input type="submit" class="btn btn-primary me-2" value="Xem Thống Kê" />
+				<a th:href="@{/}" class="btn btn-warning ms-2">Hủy</a>
+			</div>
+		</div>
+
+		<Table class="table table-hover table-bordered align-middle text-center mt-2">
+				<tr >
+					<th>ID</th>
+					<th>Tên Dịch Vụ</th>
+					<th>Số Lượt Sử Dụng</th>
+					<th>Tổng Doanh Thu</th>
+					<th>Action</th>
+
+				</tr>
+				<tr th:each=" list : ${listServiceStat}">
+					<td th:text=" ${list.id}">
+					</td>
+					<td th:text="${list.name}"></td>
+					<td th:text="${list.totalUsage}"></td>
+					<td th:text="${list.totalAmount}"></td>
+					<td><a class="btn btn-link" th:href="@{/service/serviceStat/detail(service_id = ${list.id}, month = ${month})}">Xem chi tiết</a></td>
+				</tr>
+		</Table>
+		<span>Tổng :</span >
+		<span th:text="${total}">Tổng Tiền</span >
+	</form>
+
+</body>
+
+</html>
